@@ -26,7 +26,7 @@ while (readings<1000):
         data_string = raw_data.decode("utf-8")
         data_list = data_string.split()
         Dataline.append(UnixTime)
-        Dataline.append(data_list)
+        Dataline.extend(data_list)
         print(Dataline)
         writer.writerows([Dataline]) #Write the values of Dataline list to the csv file as a list of lists. A simple list will result in each character being separated by a comma
         Dataline=[] #Reinitialize the dataline list in preparation for the next reading
