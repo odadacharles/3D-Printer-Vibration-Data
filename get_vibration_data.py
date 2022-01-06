@@ -28,9 +28,12 @@ while (readings<2000):
         data_list = data_string.split() #Split the string into a list of individual words. This separates data from different vibration axes
         Dataline.append(UnixTime) #Add the Unixtime to the Dataline list. Time in the unix format keeps the data 'neat' i.e. easier to transfer
         Dataline.extend(data_list) #Add the data_list list to the Dataline List
-        print(Dataline) #Print the dataline. Helps to verify the data that will be added to the csv file
-        writer.writerows([Dataline]) #Write the values of Dataline list to the csv file as a list of lists. A simple list will result in each character being separated by a comma
-        Dataline=[] #Reinitialize the dataline list in preparation for the next reading
-        readings+=1 #Adds one to the counter
+        if readings<30:
+            readings+=1
+        else:
+            print(Dataline) #Print the dataline. Helps to verify the data that will be added to the csv file
+            writer.writerows([Dataline]) #Write the values of Dataline list to the csv file as a list of lists. A simple list will result in each character being separated by a comma
+            Dataline=[] #Reinitialize the dataline list in preparation for the next reading
+            readings+=1 #Adds one to the counter
 
 serialPort.close() #close the serial port
