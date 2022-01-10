@@ -1,6 +1,6 @@
 import serial #import the serial port library
-from datetime import datetime #import the library for getting current time
-import time #import the library for converting current time to unix time
+import datetime #import the library for getting current time
+from time import time #import the library for converting current time to unix time
 import csv #import the csv library for writing to the csv file
 import sys #import the sys library that is needed by the sys.exit() feature to close the program
 
@@ -19,14 +19,15 @@ while (readings<2000):
     if(serialPort.in_waiting>0): #Check if there's any data from the specified serial port
         f = open('C:/Users/Charlie.O/Documents/Python Projects/3D Printer Vibration Data/Vibrations.csv', 'a',newline='') #open the csv file that will be written to. 'a' worked, 'w' did not
         writer=csv.writer(f) #create an instance of the csv writer that will be writing to the file 'f'
-        Time = datetime.now() #Get the current date and time
-        UnixTime = str(time.mktime(Time.timetuple())) #convert the current date and time to unixtime. Makes writing to csv less 'clanky'
+        Time = int(time() * 1000) #Get the current date and time
+        #UnixTime = time.mktime(Time.timetuple()) * 1000 #convert the current date and time to unixtime. Makes writing to csv less 'clanky'
+        #print(UnixTime)
         #Read data out of the buffer until a carriage return/new line is found and save to the variable "Temperature"
         
         raw_data=serialPort.readline()  #Convert the input from the serial port to string and save to a variable
         data_string = raw_data.decode("utf-8") #Decode the data string. This helps to remove some miscellaneous information
         data_list = data_string.split() #Split the string into a list of individual words. This separates data from different vibration axes
-        Dataline.append(UnixTime) #Add the Unixtime to the Dataline list. Time in the unix format keeps the data 'neat' i.e. easier to transfer
+        Dataline.append(Time) #Add the Unixtime to the Dataline list. Time in the unix format keeps the data 'neat' i.e. easier to transfer
         Dataline.extend(data_list) #Add the data_list list to the Dataline List
         if readings<30:
             readings+=1

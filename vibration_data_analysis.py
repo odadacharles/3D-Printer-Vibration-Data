@@ -1,9 +1,16 @@
-import endaq
-import csv
+import pyqtgraph as pg
+import numpy as np
+import sys
+from PyQt6 import QtWidgets, QtCore
 
-csv_file = open('C:/Users/Charlie.O/Documents/Python Projects/3D Printer Vibration Data/Vibrations.csv') #Open the csv file where the bulk sensor data is stored
-csvreader = csv.reader(csv_file) #Read through the bulk csv file and store its contents in a variable called 'csvreader'
+app = QtWidgets.QApplication(sys.argv)  # Create QApplication ***
 
-data = {}
-x_axis = 
-y_axis
+def main ():
+    x = np.random.normal(size=1000)
+    y = np.random.normal(size=1000)
+    pg.plot(x, y, pen=None, symbol='o')  ## setting pen=None disables line drawing
+
+if __name__ == '__main__':
+    if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
+        main()
+        app.exec()  # Start QApplication event loop ***
